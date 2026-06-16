@@ -1,26 +1,41 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-
-function EmployeeList() {
-  const [employees, setEmployees] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((res) => setEmployees(res.data));
-  }, []);
-
+function EmployeeList({
+  employees,
+  deleteEmployee,
+  editEmployee,
+}) {
   return (
-    <>
-      <h2>Employee List</h2>
+    <div>
 
       {employees.map((emp) => (
-        <div key={emp.id}>
-          <h4>{emp.name}</h4>
+        <div
+          key={emp.id}
+          className="card p-3 mb-3 shadow"
+        >
+          <h5>{emp.name}</h5>
+
           <p>{emp.email}</p>
+
+          <div>
+
+            <button
+              className="btn btn-warning me-2"
+              onClick={() => editEmployee(emp.id)}
+            >
+              Edit
+            </button>
+
+            <button
+              className="btn btn-danger"
+              onClick={() => deleteEmployee(emp.id)}
+            >
+              Delete
+            </button>
+
+          </div>
         </div>
       ))}
-    </>
+
+    </div>
   );
 }
 
